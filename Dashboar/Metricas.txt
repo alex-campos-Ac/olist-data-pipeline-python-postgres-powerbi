@@ -1,0 +1,28 @@
+Se fosse um dashboard real para Power BI, eu adicionaria estas métricas
+Comercial
+Receita Total
+Receita Líquida
+Quantidade de Pedidos
+Ticket Médio
+Clientes Ativos
+Taxa de Conversão
+Margem (%)
+Crescimento vs Mês Anterior
+Logística
+SLA de Entrega (%)
+Tempo Médio de Entrega
+Tempo Médio por Transportadora
+Atraso Médio
+Pedidos em Trânsito
+Pedidos Atrasados
+Lead Time de Expedição
+Custo Logístico por Pedido
+Supply Chain
+Ruptura de Estoque (%)
+Giro de Estoque
+Cobertura de Estoque (dias)
+Fill Rate
+OTIF (On Time In Full)
+Tempo Médio de Reposição
+
+Para um dashboard executivo, uma boa referência é trabalhar com 8 a 12 KPIs principais, distribuídos entre Comercial, Operação Logística e Supply Chain, mantendo a navegação por abas como no mockup que você gerou. Isso deixa o dashboard com aparência de produto SaaS premium e evita poluição visual.
