@@ -1,0 +1,4 @@
+-- Caso as colunas estejam como texto/timestamp e você queira alterar diretamente o tipo
+ALTER TABLE public.orders 
+    ALTER COLUMN order_purchase_timestamp TYPE DATE USING order_purchase_timestamp::DATE,
+    ALTER COLUMN order_estimated_delivery_date TYPE DATE USING order_estimated_delivery_date::DATE;
