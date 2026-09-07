@@ -2,3 +2,117 @@
 ALTER TABLE public.orders 
     ALTER COLUMN order_purchase_timestamp TYPE DATE USING order_purchase_timestamp::DATE,
     ALTER COLUMN order_estimated_delivery_date TYPE DATE USING order_estimated_delivery_date::DATE;
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-- 1. Criar a coluna traduzida na tabela public.products
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS product_category_name_pt VARCHAR(255);
+
+-- 2. Preencher os nomes em Português
+UPDATE public.products
+SET product_category_name_pt = CASE product_category_name
+    WHEN 'health_beauty' THEN 'Beleza e Saúde'
+    WHEN 'bed_bath_table' THEN 'Cama, Mesa e Banho'
+    WHEN 'sports_leisure' THEN 'Esporte e Lazer'
+    WHEN 'computers_accessories' THEN 'Informática e Acessórios'
+    WHEN 'furniture_decor' THEN 'Móveis e Decoração'
+    WHEN 'housewares' THEN 'Utilidades Domésticas'
+    WHEN 'watches_gifts' THEN 'Relógios e Presentes'
+    WHEN 'telephony' THEN 'Telefonia'
+    WHEN 'auto' THEN 'Automotivo'
+    WHEN 'toys' THEN 'Brinquedos'
+    WHEN 'cool_stuff' THEN 'Utilidades e Presentes'
+    WHEN 'baby' THEN 'Bebês'
+    WHEN 'perfumery' THEN 'Perfumaria'
+    WHEN 'stationery' THEN 'Papelaria'
+    WHEN 'fashion_bags_accessories' THEN 'Bolsas e Acessórios'
+    WHEN 'office_furniture' THEN 'Móveis para Escritório'
+    WHEN 'garden_tools' THEN 'Jardinagem e Ferramentas'
+    WHEN 'pet_shop' THEN 'Pet Shop'
+    WHEN 'electronics' THEN 'Eletrônicos'
+    WHEN 'construction_tools_construction' THEN 'Construção e Ferramentas'
+    WHEN 'home_appliances' THEN 'Eletrodomésticos'
+    WHEN 'luggage_accessories' THEN 'Malas e Acessórios'
+    WHEN 'consoles_games' THEN 'Consoles e Games'
+    WHEN 'construction_tools_lights' THEN 'Iluminação e Construção'
+    WHEN 'home_comfort' THEN 'Conforto para o Lar'
+    WHEN 'fashion_shoes' THEN 'Calçados'
+    WHEN 'small_appliances' THEN 'Eletroportáteis'
+    WHEN 'air_conditioning' THEN 'Ar Condicionado'
+    WHEN 'fixed_telephony' THEN 'Telefonia Fixa'
+    WHEN 'food' THEN 'Alimentos'
+    WHEN 'drinks' THEN 'Bebidas'
+    WHEN 'market_place' THEN 'Marketplace'
+    WHEN 'books_general_interest' THEN 'Livros de Interesse Geral'
+    WHEN 'books_technical' THEN 'Livros Técnicos'
+    WHEN 'fashion_male_clothing' THEN 'Moda Masculina'
+    WHEN 'fashio_female_clothing' THEN 'Moda Feminina'
+    WHEN 'fashion_childrens_clothes' THEN 'Moda Infantil'
+    WHEN 'fashion_underwear_beach' THEN 'Moda Praia e Íntima'
+    WHEN 'fashion_sport' THEN 'Moda Esportiva'
+    WHEN 'audio' THEN 'Áudio'
+    WHEN 'musical_instruments' THEN 'Instrumentos Musicais'
+    WHEN 'furniture_living_room' THEN 'Móveis para Sala'
+    WHEN 'furniture_bedroom' THEN 'Móveis para Quarto'
+    WHEN 'furniture_mattress_and_upholstery' THEN 'Móveis e Colchões'
+    WHEN 'industry_commerce_and_business' THEN 'Indústria e Comércio'
+    WHEN 'agro_industry_and_commerce' THEN 'Agronegócio e Comércio'
+    WHEN 'arts_and_craftmanship' THEN 'Artesanato'
+    WHEN 'art' THEN 'Arte'
+    WHEN 'christmas_supplies' THEN 'Artigos de Natal'
+    WHEN 'party_supplies' THEN 'Artigos de Festas'
+    WHEN 'dvds_blu_ray' THEN 'DVDs e Blu-ray'
+    WHEN 'music' THEN 'Música'
+    WHEN 'cine_photo' THEN 'Cinema e Fotografia'
+    WHEN 'tablets_printing_image' THEN 'Tablets e Impressão'
+    WHEN 'signaling_and_security' THEN 'Sinalização e Segurança'
+    WHEN 'security_and_services' THEN 'Segurança e Serviços'
+    WHEN 'costruction_tools_tools' THEN 'Ferramentas Manuais'
+    WHEN 'costruction_tools_garden' THEN 'Ferramentas para Jardim'
+    WHEN 'construction_tools_safety' THEN 'Equipamentos de Segurança'
+    WHEN 'diapers_and_hygiene' THEN 'Fraldas e Higiene'
+    WHEN 'flowers' THEN 'Flores'
+    WHEN 'la_cuisine' THEN 'Cozinha e Gastronomia'
+    WHEN 'home_construction' THEN 'Construção da Casa'
+    WHEN 'food_drink' THEN 'Alimentos e Bebidas'
+    WHEN 'books_imported' THEN 'Livros Importados'
+    WHEN 'computers' THEN 'Computadores'
+    ELSE COALESCE(INITCAP(REPLACE(product_category_name, '_', ' ')), 'Não informado')
+
+
+Coluna estado por extenso:
+-- 1. Cria a coluna para o nome por extenso
+ALTER TABLE public.customers ADD COLUMN IF NOT EXISTS customer_state_full VARCHAR(50);
+
+-- 2. Mapeia as siglas para o nome aceito pelo Power BI
+UPDATE public.customers
+SET customer_state_full = CASE customer_state
+    WHEN 'AC' THEN 'Acre'
+    WHEN 'AL' THEN 'Alagoas'
+    WHEN 'AM' THEN 'Amapa'
+    WHEN 'AP' THEN 'Amapa'
+    WHEN 'BA' THEN 'Bahia'
+    WHEN 'CE' THEN 'Ceara'
+    WHEN 'DF' THEN 'Distrito Federal'
+    WHEN 'ES' THEN 'Espirito Santo'
+    WHEN 'GO' THEN 'Goias'
+    WHEN 'MA' THEN 'Maranhao'
+    WHEN 'MG' THEN 'Minas Gerais'
+    WHEN 'MS' THEN 'Mato Grosso do Sul'
+    WHEN 'MT' THEN 'Mato Grosso'
+    WHEN 'PA' THEN 'Para'
+    WHEN 'PB' THEN 'Paraiba'
+    WHEN 'PE' THEN 'Pernambuco'
+    WHEN 'PI' THEN 'Piaui'
+    WHEN 'PR' THEN 'Parana'
+    WHEN 'RJ' THEN 'Rio de Janeiro'
+    WHEN 'RN' THEN 'Rio Grande do Norte'
+    WHEN 'RO' THEN 'Rondonia'
+    WHEN 'RR' THEN 'Roraima'
+    WHEN 'RS' THEN 'Rio Grande do Sul'
+    WHEN 'SC' THEN 'Santa Catarina'
+    WHEN 'SE' THEN 'Sergipe'
+    WHEN 'SP' THEN 'Sao Paulo'
+    WHEN 'TO' THEN 'Tocantins'
+    ELSE customer_state
+END;
+END;
