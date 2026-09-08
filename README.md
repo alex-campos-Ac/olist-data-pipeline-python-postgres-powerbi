@@ -35,9 +35,10 @@ Assim como nos demais projetos, apenas pedidos com status `delivered` são consi
 - Ticket médio por estado (barras).
 - Tabela detalhada de pedidos, com filtro por período e estado.
 
-## 🧠 Desafio Técnico — USERELATIONSHIP + DATESINPERIOD
+### 🧠 Desafio Técnico — Contexto de Relacionamento Inativo no DAX
 
-A medida de Crescimento vs. Mês Anterior precisava comparar a receita de dois blocos de meses usando `order_approved_at`, coluna com uma relação **inativa** com `d_Calendario` (a relação ativa do modelo usa `order_purchase_timestamp`). A combinação `USERELATIONSHIP` + `DATESINPERIOD` no mesmo `CALCULATE` não retornava valor — a solução foi substituir `DATESINPERIOD` por um filtro manual de intervalo de datas (`FILTER` + comparação direta de `>=`/`<=`), mantendo o `USERELATIONSHIP` para ativar a relação correta apenas dentro da medida, sem alterar o modelo global.
+* **Desafio:** A medida de análise temporal precisava calcular a receita com base na data de aprovação do pedido (`order_approved_at`), que possui um relacionamento **inativo** com a tabela `d_Calendario` (visto que o relacionamento ativo padrão do modelo utiliza a data de compra `order_purchase_timestamp`). A tentativa de combinar `USERELATIONSHIP` com `DATESINPERIOD` dentro do mesmo `CALCULATE` gerava conflito de contexto e retornava valores em branco/nulos.
+* **Solução:** Substituição da função `DATESINPERIOD` por um filtro explícito de intervalo de datas (`FILTER` combinado com operadores `>=` e `<=`). Isso permitiu manter o `USERELATIONSHIP` ativo exclusivamente dentro do escopo da medida, garantindo a transição correta de contexto sem alterar o comportamento global das demais telas do modelo.
 
 ## 📂 Estrutura do Repositório
 
