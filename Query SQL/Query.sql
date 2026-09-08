@@ -3,7 +3,6 @@ ALTER TABLE public.orders
     ALTER COLUMN order_purchase_timestamp TYPE DATE USING order_purchase_timestamp::DATE,
     ALTER COLUMN order_estimated_delivery_date TYPE DATE USING order_estimated_delivery_date::DATE;
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 -- 1. Criar a coluna traduzida na tabela public.products
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS product_category_name_pt VARCHAR(255);
 
@@ -82,6 +81,8 @@ SET product_category_name_pt = CASE product_category_name
 Coluna estado por extenso:
 -- 1. Cria a coluna para o nome por extenso
 ALTER TABLE public.customers ADD COLUMN IF NOT EXISTS customer_state_full VARCHAR(50);
+
+
 
 -- 2. Mapeia as siglas para o nome aceito pelo Power BI
 UPDATE public.customers
