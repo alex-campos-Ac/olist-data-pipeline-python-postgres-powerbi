@@ -115,4 +115,18 @@ SET customer_state_full = CASE customer_state
     WHEN 'TO' THEN 'Tocantins'
     ELSE customer_state
 END;
+
+
+-- 1. Cria a coluna traduzida na tabela de pagamentos
+ALTER TABLE public.order_payments ADD COLUMN IF NOT EXISTS payment_type_pt VARCHAR(50);
+
+-- 2. Atualiza a coluna com as traduções amigáveis em Português
+UPDATE public.order_payments
+SET payment_type_pt = CASE payment_type
+    WHEN 'credit_card' THEN 'Cartão de Crédito'
+    WHEN 'debit_card'  THEN 'Cartão de Débito'
+    WHEN 'boleto'      THEN 'Boleto'
+    WHEN 'voucher'     THEN 'Voucher / Vale'
+    WHEN 'wallet'      THEN 'Carteira Digital'
+    ELSE COALESCE(INITCAP(REPLACE(payment_type, '_', ' ')), 'Não informado')
 END;
